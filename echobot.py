@@ -71,7 +71,7 @@ def updater(token: str):
                     send_message(user['id'], text)
                 elif 'audio' in message:
                     audio=message['audio']
-                    send_audio(user['id'],user['audio'])
+                    send_audio(user['chat_id'],user['audio'])
                 elif 'contact' in message:
                     contact = message['contact']
                     send_contact(user['id'], contact['first_name'], contact['phone_number'])
