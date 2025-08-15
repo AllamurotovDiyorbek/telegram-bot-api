@@ -14,7 +14,13 @@ def get_updates(offset: int | None):
 
     return response.json()["result"]
 
-
+def send_audio(chat_id: int or str,audio:str):
+    params={
+        'chat_id':chat_id,
+        'audio':audio
+    }
+    sendaudio_url=f'{BASA_URL}/sendAudio'
+    requests.get(sendaudio_url,params=params)
 def send_message(chat_id: int, text: str):
     params = {
         'chat_id': chat_id,
@@ -63,6 +69,9 @@ def updater(token: str):
                 if 'text' in message:
                     text = message['text']
                     send_message(user['id'], text)
+                elif 'audio' in message:
+                    audio=message['audio']
+                    send_audio(user['id'],user['audio'])
                 elif 'contact' in message:
                     contact = message['contact']
                     send_contact(user['id'], contact['first_name'], contact['phone_number'])
