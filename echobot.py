@@ -14,13 +14,6 @@ def get_updates(offset: int | None):
 
     return response.json()["result"]
 
-def send_audio(chat_id: int or str,audio:str):
-    params={
-        'chat_id':chat_id,
-        'audio':audio
-    }
-    sendaudio_url=f'{BASA_URL}/sendAudio'
-    requests.get(sendaudio_url,params=params)
 def send_message(chat_id: int, text: str):
     params = {
         'chat_id': chat_id,
@@ -47,11 +40,16 @@ def send_photo(chat_id: int, photo: str):
         'chat_id': chat_id,
         'photo': photo,
     }
-
     sendmessage_url = f'{BASE_URL}/sendPhoto'
     requests.get(sendmessage_url, params=params)
+def send_audio(chat_id: int, audio: str):
+    params = {
+        'chat_id': chat_id,
+        'audio': audio
+    }
 
-
+    sendmessage_url = f'{BASE_URL}/sendAudio'
+    requests.get(sendmessage_url, params=params)
 def updater(token: str):
 
     offset = None
@@ -71,7 +69,7 @@ def updater(token: str):
                     send_message(user['id'], text)
                 elif 'audio' in message:
                     audio=message['audio']
-                    send_audio(user['chat_id'],user['audio'])
+                    send_audio(user['id'],user['audio'])
                 elif 'contact' in message:
                     contact = message['contact']
                     send_contact(user['id'], contact['first_name'], contact['phone_number'])
